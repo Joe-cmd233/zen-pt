@@ -1,0 +1,51 @@
+body {
+    background-color: #001529;
+    font-family: 'Inter', sans-serif;
+    text-align: center;
+    color: #c1ff72;
+    padding-top: 50px;
+  }
+  
+  h1 {
+    margin-bottom: 30px;
+  }
+  
+  #fase {
+    font-size: 24px;
+    margin-top: 20px;
+    font-weight: bold;
+  }
+  
+  .clover-container {
+    width: 300px;
+    height: 300px;
+    margin: 0 auto;
+    position: relative;
+    background-image: url('src/clovers.png');
+    background-size: 300px 300px;
+    background-repeat: repeat;
+    background-position: center;
+    border-radius: 0%;
+}  
+  
+  .clover {
+    width: 100%;
+    height: 100%;
+    transition: transform 2s ease-in-out;
+    background-image: url('src/bigclover.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    filter: drop-shadow(0 0 10px rgba(34, 34, 34, 0.9));
+  }
+  
+button {
+    background: linear-gradient(to right, #c1ff72, #b0beff);
+    color: #111;
+    border-radius: 10px;
+    height: 60px;
+    width: 160px;
+    font-size: 30px;
+    font-family: 'Inter', sans-serif;
+}
+  
