@@ -105,6 +105,7 @@ button {
 
 #select {
   transition: 0.5s;
+    scale: 0.5;
 }
 
 #vai {
