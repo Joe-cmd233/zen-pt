@@ -1,130 +1,149 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body {
-    background-color: #001529;
-    font-family:  "Quicksand", sans-serif;
-    text-align: center;
-    color: #c1ff72;
-    padding-top: 50px;
-  }
-  
-  h1 {
-    margin-bottom: 30px;
-  }
+    min-height: 100vh;
 
-  h5 {
+    background: #001529;
+
     color: #c1ff72;
-    align-self: bottom;
-  }
-  
-  #fase {
-    font-size: 24px;
-    margin-top: 20px;
-    font-weight: bold;
-  }
-  
-  .clover-container {
-    width: 300px;
-    height: 300px;
-    margin: 0 auto;
-    position: relative;
-    background-image: url('src/clovers.png');
-    background-size: 300px 300px;
-    background-repeat: repeat;
-    background-position: center;
-    border-radius: 0%;
-}  
-  
-  .clover {
+
+    font-family: "Quicksand", sans-serif;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 20px;
+}
+
+.app {
     width: 100%;
-    height: 100%;
-    transition: transform 2s ease-in-out;
-    background-image: url('src/bigclover.png');
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: contain;
-    filter: drop-shadow(0 0 10px rgba(34, 34, 34, 0.9));
-  }
+    max-width: 600px;
 
- .clover:hover {
-    transform: scale(0.7);
-  }
-  
-button {
-    background: linear-gradient(to right, #c1ff72, #b0beff);
-    color: #111;
-    border-radius: 10px;
-    height: 60px;
-    width: 160px;
-    font-size: 30px;
-    font-family:  "Quicksand", sans-serif;
-}
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 
-.p button {
-  background-image: url(src/prof.png);
-  background-size: 75%;
-  background-repeat: no-repeat;
-  background-position: center top;   
-  height: 125px;
-  width: 140px;
-  font-size: 30px;
-  line-height: 130px;
-}
-.l button {
-  background-image: url(src/leve.png);
-  background-size: 75%;
-  background-repeat: no-repeat;
-  background-position: center top;
-  height: 125px;
-  width: 140px;
-  font-size: 30px;
-  line-height: 130px;
-}
-.r button {
-  background-image: url(src/rapi.png);
-  background-size: 75%;
-  background-repeat: no-repeat;
-  background-position: center top;
-  height: 125px;
-  width: 140px;
-  font-size: 30px;
-  line-height: 130px;
-}
-.r h5 {
-  color: #ffde5b;
-  font-family:  "Quicksand", sans-serif;
-}
+    gap: 20px;
 
-.l h5 {
-  font-family:  "Quicksand", sans-serif;
-}
-
-
-.p h5 {
-  color: #006eff;
-  font-family:  "Quicksand", sans-serif;
-}
-
-#select {
-  transition: 0.5s;
-}
-
-#vai {
-  transition: 0.5s;
+    position: relative;
 }
 
 .help {
-  border-radius: 100%;
-  height: 40px;
-  width: 40px;
-  position: absolute;
-  right: 35%;
-  transform: translateX(-50%);
+    position: absolute;
+    top: 0;
+    right: 0;
+
+    width: 50px;
+    height: 50px;
+
+    border-radius: 50%;
+}
+
+.clover-container {
+    width: 300px;
+    height: 300px;
+
+    background-image: url("src/clovers.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.clover {
+    width: 100%;
+    height: 100%;
+
+    background-image: url("src/bigclover.png");
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    transition: transform 2s ease-in-out;
+
+    filter:
+        drop-shadow(
+            0 0 15px rgba(0,0,0,.6)
+        );
+
+    transform: scale(.7);
+}
+
+#fase {
+    font-size: 1.5rem;
+    font-weight: 700;
+
+    min-height: 40px;
+
+    text-align: center;
+}
+
+.botoes {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+
+    gap: 12px;
+}
+
+button {
+    cursor: pointer;
+
+    border: none;
+
+    border-radius: 12px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #c1ff72,
+            #b0beff
+        );
+
+    color: #111;
+
+    font-family: inherit;
+    font-size: 1.2rem;
+    font-weight: 700;
+
+    transition:
+        transform .2s ease,
+        opacity .2s ease;
+}
+
+button:hover {
+    transform: translateY(-2px);
+}
+
+button:active {
+    transform: scale(.96);
+}
+
+#pp {
+    width: 90px;
+    height: 90px;
+
+    font-size: 2rem;
+}
+
+.botoes button:not(#pp) {
+    width: 180px;
+    height: 60px;
 }
 
 .overlay {
     position: fixed;
     inset: 0;
 
-    background: rgba(0, 0, 0, 0.65);
+    background: rgba(0,0,0,.7);
 
     display: flex;
     justify-content: center;
@@ -134,8 +153,8 @@ button {
     visibility: hidden;
 
     transition:
-        opacity 0.3s ease,
-        visibility 0.3s ease;
+        opacity .3s ease,
+        visibility .3s ease;
 
     z-index: 9999;
 }
@@ -148,32 +167,140 @@ button {
 .janela-ajuda {
     background: #001529;
 
-    width: min(90%, 400px);
+    color: #c1ff72;
 
-    padding: 24px;
-    border-radius: 16px;
+    width: min(90vw, 450px);
 
-    box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+    padding: 25px;
 
-    transform: scale(0.9);
+    border-radius: 18px;
 
-    transition: transform 0.3s ease;
+    box-shadow:
+        0 15px 40px rgba(0,0,0,.5);
+
+    transform: scale(.9);
+
+    transition: transform .3s ease;
 }
 
 .overlay.aberto .janela-ajuda {
     transform: scale(1);
 }
 
+.janela-ajuda h2 {
+    margin-bottom: 15px;
+}
+
+.janela-ajuda p {
+    margin-bottom: 10px;
+    line-height: 1.5;
+}
+
 .x {
-  background: linear-gradient(to right, #001529,  #001529);
-  color: #c1ff72;
-  border-width: 0cap;
-  width: 30px;
-  text-align: right;
-  float: right;
+    float: right;
+
+    width: 35px;
+    height: 35px;
+
+    border-radius: 50%;
+
+    background: transparent;
+
+    color: #c1ff72;
+
+    font-size: 1rem;
 }
 
 img {
-  width: 80%;
-  height: 80%;
+    width: 100%;
+
+    margin-top: 15px;
+
+    border-radius: 10px;
+}
+
+#select {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+
+    gap: 15px;
+}
+
+.r button,
+.l button,
+.p button {
+    width: 140px;
+    height: 130px;
+
+    background-color: #001e39;
+
+    background-size: 75%;
+    background-repeat: no-repeat;
+    background-position: center 10px;
+
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+
+    padding-bottom: 12px;
+}
+
+.r button {
+    background-image: url("src/rapi.png");
+}
+
+.l button {
+    background-image: url("src/leve.png");
+}
+
+.p button {
+    background-image: url("src/prof.png");
+}
+
+.r h5,
+.l h5,
+.p h5 {
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.r h5 {
+    color: #ffde5b;
+}
+
+.l h5 {
+    color: #c1ff72;
+}
+
+.p h5 {
+    color: #006eff;
+}
+
+@media (max-width: 600px) {
+
+    .clover-container {
+        width: 240px;
+        height: 240px;
+    }
+
+    #fase {
+        font-size: 1.2rem;
+    }
+
+    #pp {
+        width: 80px;
+        height: 80px;
+    }
+
+    .botoes button:not(#pp) {
+        width: 150px;
+    }
+
+    .r button,
+    .l button,
+    .p button {
+        width: 120px;
+        height: 120px;
+    }
 }

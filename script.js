@@ -6,39 +6,23 @@ const fases = [
 ];
 
 const modos = {
-    rapi: [2000, 2000, 4000, 2000],
+    rapido: [2000, 2000, 4000, 2000],
     leve: [3000, 3000, 5000, 2000],
-    prof: [4000, 4000, 6000, 2000],
-    test: [300, 300, 300, 300]
+    profundo: [4000, 4000, 6000, 2000]
 };
 
-let cicloAtual = 0;
-let ligado = false;
-let timeoutAtual = null;
-
 const totalCiclos = 5;
+
+let ligado = false;
+let cicloAtual = 0;
+let timeoutAtual = null;
 
 const faseTexto = document.getElementById("fase");
 const botao = document.getElementById("pp");
 const clover = document.getElementById("clover");
-const select = document.getElementById("select");
-const overlay = document.getElementById("overlay");
 
-let modosAbertos = true;
-
-function toggleModos() {
-    const select = document.getElementById("select");
-
-    modosAbertos = !modosAbertos;
-
-    if (modosAbertos) {
-        select.style.opacity = "1";
-        select.style.visibility = "visible";
-    } else {
-        select.style.opacity = "0";
-        select.style.visibility = "hidden";
-    }
-}
+const overlayAjuda = document.getElementById("overlay");
+const overlayModos = document.getElementById("overlayModos");
 
 function atualizarBotao() {
     botao.textContent = ligado ? "⏹" : "▶";
@@ -49,83 +33,64 @@ function resetarFlor() {
     clover.style.transform = "scale(0.7)";
 }
 
-function restaurarInterface() {
-    select.style.opacity = "1";
-    faseTexto.innerText = "Pressione para Iniciar.";
-    atualizarBotao();
-    resetarFlor();
-}
-
-function iniciarInterface() {
-    select.style.opacity = "0";
-    atualizarBotao();
-}
-
 function aplicarFase(fase) {
-    faseTexto.innerText =
+    faseTexto.textContent =
         `Ciclo ${cicloAtual + 1} – ${fase.nome}`;
 
-    clover.style.transitionDuration =
-        `${fase.duracao}ms`;
+    clover.style.transition =
+        `transform ${fase.duracao}ms ease-in-out`;
 
     clover.style.transform =
         `scale(${fase.escala})`;
 }
 
-function proximoCiclo() {
+function finalizarSessao() {
+    ligado = false;
+
+    atualizarBotao();
+
+    faseTexto.textContent =
+        "Todos os ciclos concluídos.";
+
+    timeoutAtual = setTimeout(() => {
+        faseTexto.textContent =
+            "Pressione para Iniciar";
+
+        resetarFlor();
+    }, 2000);
+}
+
+function executarFase(indiceFase = 0) {
+
     if (!ligado) return;
 
-    if (cicloAtual >= totalCiclos) {
-        ligado = false;
+    if (indiceFase >= fases.length) {
 
-        faseTexto.innerText =
-            "Todos os ciclos concluídos.";
+        cicloAtual++;
 
-        select.style.opacity = "1";
-
-        atualizarBotao();
+        if (cicloAtual >= totalCiclos) {
+            finalizarSessao();
+            return;
+        }
 
         timeoutAtual = setTimeout(() => {
-            faseTexto.innerText =
-                "Pressione para Iniciar.";
-            resetarFlor();
-        }, 2000);
+            executarFase(0);
+        }, 500);
 
         return;
     }
 
-    let indiceFase = 0;
+    const fase = fases[indiceFase];
 
-    function executarFase() {
-        if (!ligado) return;
+    aplicarFase(fase);
 
-        if (indiceFase >= fases.length) {
-            cicloAtual++;
-
-            timeoutAtual = setTimeout(
-                proximoCiclo,
-                500
-            );
-
-            return;
-        }
-
-        const fase = fases[indiceFase];
-
-        aplicarFase(fase);
-
-        indiceFase++;
-
-        timeoutAtual = setTimeout(
-            executarFase,
-            fase.duracao
-        );
-    }
-
-    executarFase();
+    timeoutAtual = setTimeout(() => {
+        executarFase(indiceFase + 1);
+    }, fase.duracao);
 }
 
 function comecar() {
+
     if (ligado) {
         stop();
         return;
@@ -134,13 +99,13 @@ function comecar() {
     cicloAtual = 0;
     ligado = true;
 
-    fecharModos();
-
     atualizarBotao();
-    proximoCiclo();
+
+    executarFase();
 }
 
 function stop() {
+
     ligado = false;
 
     if (timeoutAtual) {
@@ -148,18 +113,22 @@ function stop() {
         timeoutAtual = null;
     }
 
-    resetarFlor();
-
-    faseTexto.innerText = "Pressione para Iniciar.";
     atualizarBotao();
+
+    faseTexto.textContent =
+        "Pressione para Iniciar";
+
+    resetarFlor();
 }
 
-function modo(mod) {
+function modo(tipo) {
+
     let tempos;
 
-    switch (mod) {
+    switch (tipo) {
+
         case 0:
-            tempos = modos.rapi;
+            tempos = modos.rapido;
             break;
 
         case 1:
@@ -167,42 +136,42 @@ function modo(mod) {
             break;
 
         case 2:
-            tempos = modos.prof;
-            break;
-
-        case 3:
-            tempos = modos.test;
+            tempos = modos.profundo;
             break;
 
         default:
             return;
     }
 
-    fases.forEach((fase, i) => {
-        fase.duracao = tempos[i];
+    fases.forEach((fase, indice) => {
+        fase.duracao = tempos[indice];
     });
+
+    fecharModos();
 }
 
 function abrirAjuda() {
-    overlay.classList.add("aberto");
+    overlayAjuda.classList.add("aberto");
 }
 
 function fecharAjuda() {
-    overlay.classList.remove("aberto");
+    overlayAjuda.classList.remove("aberto");
 }
 
-window.addEventListener("load", () => {
-    restaurarInterface();
-});
-
 function abrirModos() {
-    document
-        .getElementById("overlayModos")
-        .classList.add("aberto");
+    overlayModos.classList.add("aberto");
 }
 
 function fecharModos() {
-    document
-        .getElementById("overlayModos")
-        .classList.remove("aberto");
+    overlayModos.classList.remove("aberto");
 }
+
+window.addEventListener("load", () => {
+
+    atualizarBotao();
+
+    faseTexto.textContent =
+        "Pressione para Iniciar";
+
+    resetarFlor();
+});
