@@ -148,5 +148,66 @@
 
     <script src="script.js"></script>
 
+<button id="botaoSpotify" aria-label="Mostrar ou ocultar Spotify">
+<img src="src/music.png" style=" height: 25px; width: 25px; align-self: center;"></img>
+</button>
+
+<div id="spotifyContainer" class="spotify-oculto">
+  <iframe
+    src="https://open.spotify.com/embed/playlist/3TtbTPZBV2InE76W7wsMzD"
+    width="100%"
+    height="352"
+    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+    loading="eager">
+  </iframe>
+</div>
+
+<style>
+  #botaoSpotify {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    width: 55px;
+    height: 55px;
+    border: none;
+    border-radius: 50%;
+    background: #1DB954;
+    color: white;
+    font-size: 25px;
+    cursor: pointer;
+    z-index: 10001;
+  }
+
+  #spotifyContainer {
+    position: fixed;
+    right: 20px;
+    bottom: 85px;
+    width: min(350px, calc(100vw - 40px));
+    z-index: 10000;
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  #spotifyContainer iframe {
+    display: block;
+    border: 0;
+  }
+
+  .spotify-oculto {
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+  }
+</style>
+
+<script>
+  const botaoSpotify = document.getElementById("botaoSpotify");
+  const spotifyContainer = document.getElementById("spotifyContainer");
+
+  botaoSpotify.addEventListener("click", () => {
+    spotifyContainer.classList.toggle("spotify-oculto");
+  });
+</script>
+
 </body>
 </html>
